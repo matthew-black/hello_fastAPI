@@ -29,6 +29,12 @@ From [here](https://packaging.python.org/en/latest/guides/installing-using-pip-a
 
 * `deactivate`
 
+##### Create `requirements.txt`:
+
+Note: This only saves dependencies installed with `pip`!
+
+* `pip freeze > requirements.txt`
+
 ---
 
 ## `.gitignore`
