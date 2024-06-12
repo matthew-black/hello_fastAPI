@@ -41,3 +41,8 @@ Note: This only saves dependencies installed with `pip`!
 
 Just using [what FastAPI's back-end uses](https://github.com/tiangolo/full-stack-fastapi-template/blob/master/backend/.gitignore) in their full-stack template.
 
+---
+
+## Start the Server in Development Mode:
+
+* `fastapi dev main.py`
