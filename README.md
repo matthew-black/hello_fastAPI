@@ -1,6 +1,13 @@
 # Hello FastAPI
 
+Official Tutorial:
 * https://fastapi.tiangolo.com/tutorial/
+
+Resources:
+* Well-written Flask vs FastAPI comparison:
+  * https://christophergs.com/python/2021/06/16/python-flask-fastapi/
+* Interview with FastAPI's creator, includes some cool context on how FastAPI came to be:
+  * https://talkpython.fm/episodes/show/284/modern-and-fast-apis-with-fastapi
 
 ---
 
