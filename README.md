@@ -55,3 +55,7 @@ Just using [what FastAPI's back-end uses](https://github.com/tiangolo/full-stack
 ## Start the Server in Development Mode:
 
 * `fastapi dev main.py`
+
+Note:
+* `/docs`: Auto-generated OpenAPI documentation. (FKA: Swagger.)
+* `/redoc`: Alternate [ReDoc](https://github.com/Redocly/redoc)format. Subjectively more nifty.
