@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import List
 from enum import Enum
 
 
@@ -43,20 +45,28 @@ async def read_grand_tour(tour_name: GrandTour):
     return {"tour_name": tour_name, "2023_winner": "Sepp Kuss! 🇺🇸"}
 
 
-
-# Playing with query parameters:
-bikes = [
-    {"id": 1, "type": "road", "name": "Gitane TdF", "matt_owns_this": True},
-    {"id": 2, "type": "road", "name": "Cervelo R5", "matt_owns_this": False},
-    {"id": 3, "type": "track", "name": "Surly Steamroller", "matt_owns_this": True},
-    {"id": 4, "type": "track", "name": "All-City Thunderdome", "matt_owns_this": False},
-    {"id": 5, "type": "road", "name": "Gitane Team Pro", "matt_owns_this": False},
-]
+# ----- BIKES STUFF! Playing around with query params and request body
+#                    validation in POST route.
 
 # Enum for valid bike types
 class BikeType(str, Enum):
     road = "road"
     track = "track"
+
+# Bike class:
+class Bike(BaseModel):
+    type: BikeType
+    name: str
+    matt_owns_this: bool = False
+
+# List of Bike instances:
+bikes: List[Bike] = [
+    Bike(type = BikeType.road, name = "Gitane TdF", matt_owns_this = True),
+    Bike(type = BikeType.road, name = "Cervelo R5"),
+    Bike(type = BikeType.track, name = "Surly Steamroller", matt_owns_this = True),
+    Bike(type = BikeType.track, name = "All-City Thunderdome"),
+    Bike(type = BikeType.road, name = "Gitane Team Pro"),
+]
 
 # Endpoint that accepts whitelisted query parameters:
     # just_my_bikes is an optional query parameter with a default value of False
@@ -68,16 +78,21 @@ async def read_bikes(just_my_bikes: bool = False, type: BikeType | None = None):
 
     # Potentially filter available bikes by type:
     if type is BikeType.road:
-        bikes_to_send = [bike for bike in bikes if bike["type"] == "road"]
+        bikes_to_send = [bike for bike in bikes if bike.type == "road"]
             # Python reminder! This 👆 list comprehension stuff is the Pythonic way
             # to do filter/map/reduce stuff. Rather than: 
-            # bikes_to_send = list(filter(lambda x: x["type"] == "road", bikes))
+            # bikes_to_send = list(filter(lambda x: x.type == "road", bikes))
                 # https://www.artima.com/weblogs/viewpost.jsp?thread=98196
     elif type is BikeType.track:
-        bikes_to_send = [bike for bike in bikes if bike["type"] == "track"]
+        bikes_to_send = [bike for bike in bikes if bike.type == "track"]
 
     if just_my_bikes == False:
         return bikes_to_send
     else:
-        return [bike for bike in bikes_to_send if bike["matt_owns_this"] == True]
+        return [bike for bike in bikes_to_send if bike.matt_owns_this == True]
 
+# Ensures that the request body is a valid Bike instance, sends 201:
+@app.post("/bikes", status_code=201)
+async def create_bike(bike: Bike):
+    bikes.append(bike)
+    return bike
