@@ -69,6 +69,10 @@ async def read_bikes(just_my_bikes: bool = False, type: BikeType | None = None):
     # Potentially filter available bikes by type:
     if type is BikeType.road:
         bikes_to_send = [bike for bike in bikes if bike["type"] == "road"]
+            # Python reminder! This 👆 list comprehension stuff is the Pythonic way
+            # to do filter/map/reduce stuff. Rather than: 
+            # bikes_to_send = list(filter(lambda x: x["type"] == "road", bikes))
+                # https://www.artima.com/weblogs/viewpost.jsp?thread=98196
     elif type is BikeType.track:
         bikes_to_send = [bike for bike in bikes if bike["type"] == "track"]
 
