@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import List
 from enum import Enum
 
 
@@ -60,7 +59,7 @@ class Bike(BaseModel):
     matt_owns_this: bool = False
 
 # List of Bike instances:
-bikes: List[Bike] = [
+bikes: list[Bike] = [
     Bike(type = BikeType.road, name = "Gitane TdF", matt_owns_this = True),
     Bike(type = BikeType.road, name = "Cervelo R5"),
     Bike(type = BikeType.track, name = "Surly Steamroller", matt_owns_this = True),
